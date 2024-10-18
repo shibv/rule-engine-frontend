@@ -1,8 +1,21 @@
-# React + Vite
+# Rule Engine with AST(frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+This is a simple rule engine application backend that uses Abstract Syntax Trees (AST) to evaluate user rules based on criteria like age, salary, and experience.
 
-Currently, two official plugins are available:
+### Features
+- Create rules using rule strings.
+- Combine multiple rules into a single AST.
+- Evaluate rules against user data.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup
+
+1. Clone the repository.
+2. Install the dependencies:
+   ```bash
+   npm install```
+3. Run Code 
+    ```bash
+    npm run dev
+    ```
+

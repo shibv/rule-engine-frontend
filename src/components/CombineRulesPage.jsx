@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 const CombineRulesPage = () => {
   const [ruleName, setRuleName] = useState('');
   const [rules, setRules] = useState(['']);
+  const [loading, setloading] = useState(false);
 
   const handleAddRule = () => {
     setRules([...rules, '']);
@@ -18,14 +19,22 @@ const CombineRulesPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setloading(true);
       const response = await ruleService.combineRules({ rule_name: ruleName, rules });
       if(response.error){
         toast.error(response.error);
+        setRuleName('')
+       setRules([''])
         return;
       }
       toast.success("Combined Rules SuccessFully!!")
-      console.log(response);
+      setloading(false);
+      setRuleName('')
+      setRules([''])
     } catch (error) {
+      setloading(false);
+      setRuleName('')
+      setRules([''])
       toast.error("Error")
     }
   };
@@ -61,9 +70,13 @@ const CombineRulesPage = () => {
           Add Another Rule
         </button>
         <button 
+        disabled= {loading}
           type="submit" 
           className="w-full py-2 px-4 bg-green-500 text-white text-lg rounded-md hover:bg-green-600 transition">
-          Combine Rules
+         
+          {
+            loading ? 'Loading...' : ' Combine Rules'
+          }
         </button>
       </form>
     </div>

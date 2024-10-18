@@ -6,18 +6,29 @@ import toast from 'react-hot-toast';
 const EvaluateRulePage = () => {
   const [ruleName, setRuleName] = useState('');
   const [conditions, setConditions] = useState({ age: '', salary: '', department: '' });
+  const [loading, setloading] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setloading(true);
       const response = await ruleService.evaluateRule({ rule_name: ruleName, conditions });
     // console.log(response);
     if(response.error){
       toast.error(response.error);
+      setRuleName('');
+      setConditions({ age: '', salary: '', department: '' });
       return;
     }
     toast.success("Evaluated Successfully!!")
+    setloading(false);
+    setRuleName('');
+    setConditions({ age: '', salary: '', department: '' });
     } catch (error) {
+      setloading(false);
+      setRuleName('');
+      setConditions({ age: '', salary: '', department: '' });
       toast.error("Error")
     }
   };
@@ -63,9 +74,12 @@ const EvaluateRulePage = () => {
           />
         </div>
         <button 
+        disabled= {loading}
           type="submit" 
           className="w-full py-2 px-4 bg-purple-500 text-white text-lg rounded-md hover:bg-purple-600 transition">
-          Evaluate Rule
+          {
+            loading ? 'Loading...' : ' Combine Rules'
+          }
         </button>
       </form>
     </div>

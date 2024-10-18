@@ -5,19 +5,29 @@ import toast from 'react-hot-toast';
 const CreateRulePage = () => {
   const [ruleName, setRuleName] = useState('');
   const [rules, setRule] = useState('');
+  const [loading, setloading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setloading(true);
       const response = await ruleService.createRule({ rule_name: ruleName, rule : rules });
       
       // console.log(response);
       if(response.error){
         toast.error(response.error);
+        setRule('');
+        setRuleName('')
         return;
       }
       toast.success("Created Successfully!!")
+      setloading(false);
+      setRule('');
+      setRuleName('')
     } catch (error) {
+      setloading(false);
+      setRule('');
+      setRuleName('')
       toast.error("Failed!!")
     }
   
@@ -46,9 +56,12 @@ const CreateRulePage = () => {
           />
         </div>
         <button 
+        disabled= {loading}
           type="submit" 
           className="w-full py-2 px-4 bg-blue-500 text-white text-lg rounded-md hover:bg-blue-600 transition">
-          Create Rule
+          {
+            loading ? 'Loading...' : 'Create Rule'
+          }
         </button>
       </form>
     </div>
